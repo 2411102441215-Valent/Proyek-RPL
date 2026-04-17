@@ -5,84 +5,88 @@ Mengukur waktu eksekusi setiap metode pada data nilai mahasiswa.
 
 import time
 
-# --- Konstanta (menghindari magic numbers/hardcoded values) ---
-nilai_mahasiswa = [78, 85, 90, 67, 88, 92, 76, 81, 95, 70]
-cari_nilai = 88
+# --- Konstanta ---
+NILAI_MAHASISWA = [78, 85, 90, 67, 88, 92, 76, 81, 95, 70]
+NILAI_YANG_DICARI = 88
 JUMLAH_ITERASI = 10
 
 
 # --- Algoritma Pencarian ---
 
-def linear_search(data: list, target: int) -> int:
+def linear_search (data: list, target: int) -> int:
     """
-    Mencari target dalam list secara sekuensial (berurutan).
-    Mengembalikan indeks target jika ditemukan, -1 jika tidak.
-    Kompleksitas: O(n)
+    Mencari target dalam list secara berurutan dari awal hingga akhir.
+    Mengembalikan indeks target jika ditemukan, -1 jika tidak ditemukan.
+    Kompleksitas waktu: O(n)
     """
-    for index in range(len(data)):
-        if data[index] == target:
-            return index
+    for indeks in range(len(data)):
+        if data[indeks] == target:
+            return indeks
     return -1
 
 
-def binary_search(sorted_data: list, target: int) -> int:
+def binary_search (data_terurut: list, target: int) -> int:
     """
-    Mencari target dalam list yang sudah terurut menggunakan Binary Search.
-    Mengembalikan indeks target jika ditemukan, -1 jika tidak.
-    Kompleksitas: O(log n) — memerlukan data  yang sudah terurut sebagai prasyarat.
+    Mencari target dalam list yang sudah terurut menggunakan metode bagi-dua.
+    Mengembalikan indeks target jika ditemukan, -1 jika tidak ditemukan.
+    Kompleksitas waktu: O(log n) — data wajib sudah terurut sebelum digunakan.
     """
-    low, high = 0, len(sorted_data) - 1
+    batas_kiri, batas_kanan = 0, len(data_terurut) - 1
 
-    while low <= high:
-        mid = (low + high) // 2
-        if sorted_data[mid] == target:
-            return mid
-        elif sorted_data[mid] < target:
-            low = mid + 1
+    while batas_kiri <= batas_kanan:
+        tengah = (batas_kiri + batas_kanan) // 2
+        if data_terurut[tengah] == target:
+            return tengah
+        elif data_terurut[tengah] < target:
+            batas_kiri = tengah + 1
         else:
-            high = mid - 1
+            batas_kanan = tengah - 1
 
     return -1
+
+
+def pencarian_bawaan(data: list, target: int) -> None:
+    """
+    Wrapper untuk operator 'in' bawaan Python,
+    agar bisa diukur waktunya secara seragam dengan metode lain.
+    """
+    _ = target in data
 
 
 # --- Pengukuran Waktu ---
 
-def measure_execution_time(search_func, data: list, target: int, label: str) -> None:
+def ukur_waktu_eksekusi(fungsi_cari, data: list, target: int, label: str) -> None:
     """
     Mengukur dan mencetak waktu eksekusi sebuah fungsi pencarian.
-    Menghilangkan duplikasi blok timing yang berulang.
+    Dibuat sebagai fungsi tersendiri untuk menghindari pengulangan kode (DRY).
     """
-    start_time = time.time()
-    search_func(data, target)
-    elapsed_time = time.time() - start_time
-    print(f"  {label:<30}: {elapsed_time:.10f} detik")
-
-
-def run_builtin_search(data: list, target: int) -> None:
-    """Wrapper untuk built-in 'in' operator agar bisa diukur secara seragam."""
-    _ = target in data
+    waktu_mulai = time.time()
+    fungsi_cari(data, target)
+    waktu_selesai = time.time() - waktu_mulai
+    print(f"  {label:<30}: {waktu_selesai:.10f} detik")
 
 
 # --- Program Utama ---
 
-def main():
-    # Binary search memerlukan data terurut; gunakan sorted() agar data asli tidak berubah
-    sorted_grades = sorted(nilai_mahasiswa)
+def utama():
+    # Buat salinan data yang sudah terurut menggunakan sorted(),
+    # agar data asli NILAI_MAHASISWA tidak berubah (menghindari side effect)
+    data_terurut = sorted(NILAI_MAHASISWA)
 
     print("=== Analisis Waktu Eksekusi Big-O ===\n")
 
-    for iteration in range(1, JUMLAH_ITERASI + 1):
-        print(f"Iterasi ke-{iteration}")
-        measure_execution_time(run_builtin_search, sorted_grades, cari_nilai, "Built-in Search")
-        measure_execution_time(linear_search,      sorted_grades, cari_nilai, "Linear Search")
-        measure_execution_time(binary_search,      sorted_grades, cari_nilai, "Binary Search")
+    for iterasi in range(1, JUMLAH_ITERASI + 1):
+        print(f"Iterasi ke-{iterasi}")
+        ukur_waktu_eksekusi(pencarian_bawaan, data_terurut, NILAI_YANG_DICARI, "Pencarian Bawaan Python")
+        ukur_waktu_eksekusi(linear_search, data_terurut, NILAI_YANG_DICARI, "linear_search")
+        ukur_waktu_eksekusi(binary_search,  data_terurut, NILAI_YANG_DICARI, "binary_searchr")
         print()
 
-    print("=== Notasi Big-O dari Algoritma ===")
-    print("  Built-in Search (in list)  : O(n)")
-    print("  Linear Search              : O(n)")
-    print("  Binary Search              : O(log n)  — memerlukan data terurut")
+    print("=== Notasi Big-O dari Setiap Algoritma ===")
+    print("  Pencarian Bawaan Python  : O(n)")
+    print("  Linear Search        : O(n)")
+    print("  Binary Search          : O(log n)  — memerlukan data terurut")
 
 
 if __name__ == "__main__":
-    main()
+    utama()
