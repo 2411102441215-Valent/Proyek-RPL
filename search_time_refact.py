@@ -6,7 +6,7 @@ Mengukur waktu eksekusi setiap metode pada data nilai mahasiswa.
 import time
 
 # --- Konstanta (menghindari magic numbers/hardcoded values) ---
-STUDENT_GRADES = [78, 85, 90, 67, 88, 92, 76, 81, 95, 70]
+nilai_mahasiswa = [78, 85, 90, 67, 88, 92, 76, 81, 95, 70]
 TARGET_GRADE = 88
 ITERATION_COUNT = 10
 
@@ -15,7 +15,7 @@ ITERATION_COUNT = 10
 
 def linear_search(data: list, target: int) -> int:
     """
-    Mencari target dalam list secara sekuensial.
+    Mencari target dalam list secara sekuensial (berurutan).
     Mengembalikan indeks target jika ditemukan, -1 jika tidak.
     Kompleksitas: O(n)
     """
@@ -29,7 +29,7 @@ def binary_search(sorted_data: list, target: int) -> int:
     """
     Mencari target dalam list yang sudah terurut menggunakan Binary Search.
     Mengembalikan indeks target jika ditemukan, -1 jika tidak.
-    Kompleksitas: O(log n) — memerlukan data terurut sebagai prasyarat.
+    Kompleksitas: O(log n) — memerlukan data  yang sudah terurut sebagai prasyarat.
     """
     low, high = 0, len(sorted_data) - 1
 
@@ -67,7 +67,7 @@ def run_builtin_search(data: list, target: int) -> None:
 
 def main():
     # Binary search memerlukan data terurut; gunakan sorted() agar data asli tidak berubah
-    sorted_grades = sorted(STUDENT_GRADES)
+    sorted_grades = sorted(nilai_mahasiswa)
 
     print("=== Analisis Waktu Eksekusi Big-O ===\n")
 
