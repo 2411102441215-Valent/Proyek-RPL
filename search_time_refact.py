@@ -78,8 +78,8 @@ def utama():
     for iterasi in range(1, JUMLAH_ITERASI + 1):
         print(f"Iterasi ke-{iterasi}")
         ukur_waktu_eksekusi(pencarian_bawaan, data_terurut, NILAI_YANG_DICARI, "Pencarian Bawaan Python")
-        ukur_waktu_eksekusi(linear_search, data_terurut, NILAI_YANG_DICARI, "linear_search")
-        ukur_waktu_eksekusi(binary_search,  data_terurut, NILAI_YANG_DICARI, "binary_searchr")
+        ukur_waktu_eksekusi(linear_search, data_terurut, NILAI_YANG_DICARI, "Linear Search")
+        ukur_waktu_eksekusi(binary_search,  data_terurut, NILAI_YANG_DICARI, "Binary Search")
         print()
 
     print("=== Notasi Big-O dari Setiap Algoritma ===")
