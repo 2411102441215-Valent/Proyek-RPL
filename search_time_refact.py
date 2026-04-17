@@ -45,7 +45,7 @@ def binary_search (data_terurut: list, target: int) -> int:
     return -1
 
 
-def pencarian_bawaan(data: list, target: int) -> None:
+def builtin_search(data: list, target: int) -> None:
     """
     Wrapper untuk operator 'in' bawaan Python,
     agar bisa diukur waktunya secara seragam dengan metode lain.
