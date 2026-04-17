@@ -8,7 +8,7 @@ import time
 # --- Konstanta (menghindari magic numbers/hardcoded values) ---
 nilai_mahasiswa = [78, 85, 90, 67, 88, 92, 76, 81, 95, 70]
 cari_nilai = 88
-ITERATION_COUNT = 10
+JUMLAH_ITERASI = 10
 
 
 # --- Algoritma Pencarian ---
@@ -71,7 +71,7 @@ def main():
 
     print("=== Analisis Waktu Eksekusi Big-O ===\n")
 
-    for iteration in range(1, ITERATION_COUNT + 1):
+    for iteration in range(1, JUMLAH_ITERASI + 1):
         print(f"Iterasi ke-{iteration}")
         measure_execution_time(run_builtin_search, sorted_grades, cari_nilai, "Built-in Search")
         measure_execution_time(linear_search,      sorted_grades, cari_nilai, "Linear Search")
